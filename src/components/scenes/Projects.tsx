@@ -99,7 +99,22 @@ function MissionCard({ project }: { project: Project }) {
           </ul>
           {project.links.length === 0 ? (
             <p className="mt-4 font-mono text-xs text-accent">{copy.projects.noLink}</p>
-          ) : null}
+          ) : (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {project.links.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 border border-hologram/40 bg-hologram/10 px-2.5 py-1 font-mono text-xs text-hologram transition-colors hover:border-hologram hover:bg-hologram/20 hover:text-text"
+                >
+                  <span>{link.label}</span>
+                  <span className="text-[0.6875rem] opacity-75">↗ ({copy.a11y.external})</span>
+                </a>
+              ))}
+            </div>
+          )}
           <ExpandableTrigger
             ref={triggerRef}
             className="mt-4 inline-flex items-center gap-2 border border-line-bright px-3 py-2 font-mono text-xs text-hologram transition-colors hover:border-hologram"
@@ -158,7 +173,21 @@ function dossierSections(project: Project, copy: ReturnType<typeof useCopy>) {
         {project.results.map((result) => (
           <div key={result.label}>
             <dt className="font-mono text-xs text-muted">{result.label}</dt>
-            <dd className="break-words">{result.value}</dd>
+            <dd className="break-words">
+              {result.value.startsWith("http") ? (
+                <a
+                  href={result.value}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-hologram underline underline-offset-4 hover:text-text transition-colors"
+                >
+                  <span>{result.value}</span>
+                  <span className="font-mono text-[0.6875rem] text-muted">↗ ({copy.a11y.external})</span>
+                </a>
+              ) : (
+                result.value
+              )}
+            </dd>
           </div>
         ))}
       </dl>
@@ -188,13 +217,13 @@ function dossierSections(project: Project, copy: ReturnType<typeof useCopy>) {
           {project.links.map((link) => (
             <li key={link.href}>
               <a
-                className="text-hologram underline"
+                className="inline-flex items-center gap-1.5 text-hologram underline underline-offset-4 hover:text-text transition-colors"
                 href={link.href}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
-                {link.label}
-                <span className="sr-only"> {copy.a11y.external}</span>
+                <span>{link.label}</span>
+                <span className="font-mono text-xs text-muted">↗ ({copy.a11y.external})</span>
               </a>
             </li>
           ))}

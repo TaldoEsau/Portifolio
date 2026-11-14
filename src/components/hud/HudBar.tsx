@@ -5,6 +5,7 @@ import Link from "next/link";
 import { LiveBadge } from "@/components/hud/LiveBadge";
 import { LocaleToggle } from "@/components/hud/LocaleToggle";
 import { ProgressChip } from "@/components/hud/ProgressChip";
+import { ChooseAgain } from "@/components/side/ChooseAgain";
 import { SideSwitch } from "@/components/side/SideSwitch";
 import { SoundToggle } from "@/components/hud/SoundToggle";
 import { useCopy } from "@/hooks/useCopy";
@@ -47,13 +48,14 @@ export function HudBar() {
         <ProgressChip />
         <button
           type="button"
-          className="min-h-11 cursor-pointer px-2 font-mono text-xs lg:hidden"
+          className="min-h-11 cursor-pointer px-2 font-mono text-xs"
           aria-expanded={chatOpen}
           aria-label={copy.a11y.comms}
           onClick={() => setChatOpen(!chatOpen)}
         >
           {copy.hud.comms}
         </button>
+        <ChooseAgain />
         <SideSwitch />
         <SoundToggle />
         <LocaleToggle />

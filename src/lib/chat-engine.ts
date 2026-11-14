@@ -3,7 +3,6 @@ import type { SceneId } from "@/lib/scenes";
 export type ChatCommand =
   | { type: "scene"; scene: SceneId }
   | { type: "direct" }
-  | { type: "holocron" }
   | { type: "help" }
   | { type: "interferencia" }
   | { type: "raid" }
@@ -21,8 +20,6 @@ const COMMANDS: Record<string, ChatCommand> = {
   "!lab": { type: "scene", scene: "lab" },
   "!contato": { type: "scene", scene: "contato" },
   "!contact": { type: "scene", scene: "contato" },
-  "!clip": { type: "holocron" },
-  "!holocron": { type: "holocron" },
   "!direto": { type: "direct" },
   "!direct": { type: "direct" },
   "!ajuda": { type: "help" },

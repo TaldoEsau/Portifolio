@@ -3,7 +3,6 @@ import { SCENES } from "@/lib/scenes";
 export const PROTOCOLS = [
   "droide",
   "dossier",
-  "holocron",
   "explorer",
   "interferencia",
   "raid",

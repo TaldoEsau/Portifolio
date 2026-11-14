@@ -24,8 +24,6 @@ import type { BlueprintId } from "@/remotion/diagram-props";
 import { useStage } from "@/store/stage";
 
 const COMPOSITIONS: BlueprintId[] = [
-  "hyperspace-boot",
-  "gemini-pipeline",
   "arduino-clip",
 ];
 
@@ -34,7 +32,7 @@ export function Lab() {
   const scene = useStage((state) => state.scene);
   const setDossierOpen = useStage((state) => state.setDossierOpen);
   const active = scene === "lab";
-  const [composition, setComposition] = useState<BlueprintId>("gemini-pipeline");
+  const [composition, setComposition] = useState<BlueprintId>("arduino-clip");
 
   return (
     <SceneFrame id="lab">

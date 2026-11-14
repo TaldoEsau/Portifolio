@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { ChooseAgain } from "@/components/side/ChooseAgain";
 import { SceneFrame } from "@/components/stage/SceneFrame";
 import { useCopy } from "@/hooks/useCopy";
@@ -50,25 +49,11 @@ export function Contact() {
             ) : null}
           </li>
         ))}
-        <li className="lift door border border-line bg-surface p-4">
-          <p className="font-mono text-xs text-accent">{copy.contact.cv}</p>
-          <p className="mt-2">{copy.contact.cvMissing}</p>
-        </li>
       </ul>
-      <p>
-        <span className="font-mono text-xs text-muted">
-          {copy.contact.statusLabel}:{" "}
-        </span>
-        {copy.contact.status}
-      </p>
-      <p className="text-muted">{copy.contact.response}</p>
       <footer className="flex flex-wrap gap-4 border-t border-line pt-4 font-mono text-xs text-muted">
         <p>
           © {copy.year} {copy.contact.footer}
         </p>
-        <Link href="/direto" className="text-hologram">
-          {copy.contact.direct}
-        </Link>
         <a
           href="https://www.twitch.tv/taldosatis"
           className="text-hologram"

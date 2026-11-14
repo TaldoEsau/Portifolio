@@ -47,7 +47,21 @@ export function Postgrad() {
           </div>
           <div className="flex gap-2">
             <dt className="text-muted">{postgrad.institutionLabel}:</dt>
-            <dd className="text-accent">{postgrad.institution}</dd>
+            <dd className="text-accent">
+              {"institutionHref" in postgrad && postgrad.institutionHref ? (
+                <a
+                  href={postgrad.institutionHref as string}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 underline underline-offset-4 hover:text-text transition-colors"
+                >
+                  <span>{postgrad.institution}</span>
+                  <span className="text-[0.65rem] font-mono text-muted">↗</span>
+                </a>
+              ) : (
+                postgrad.institution
+              )}
+            </dd>
           </div>
         </dl>
         <p className="max-w-[68ch] text-muted">{postgrad.lead}</p>

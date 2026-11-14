@@ -73,6 +73,19 @@ export function Robot({
       <span className="robot-float block h-full w-full">
         <RobotArt ref={eyeRef} side={side} animate={live} className="robot-art block h-full w-full" />
       </span>
+      {live && moving ? (
+        <span className="robot-thruster-sparks" aria-hidden="true">
+          <span className="spark spark-1" />
+          <span className="spark spark-2" />
+          <span className="spark spark-3" />
+        </span>
+      ) : null}
+      {live && state === "speaking" ? (
+        <span className="robot-holo-rings" aria-hidden="true">
+          <span className="holo-ring holo-ring-1" />
+          <span className="holo-ring holo-ring-2" />
+        </span>
+      ) : null}
       {live && state === "celebrating" ? (
         <span className="robot-burst" aria-hidden="true">
           {Array.from({ length: 6 }, (_, index) => (

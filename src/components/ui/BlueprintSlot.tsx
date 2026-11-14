@@ -71,6 +71,7 @@ export function BlueprintSlot({
           navLock: copy.lab.navLock,
           lines: [...copy.lab.geminiSteps],
           caption: copy.lab.arduinoCaption,
+          steps: [...copy.lab.arduinoSteps],
         } satisfies DiagramProps}
       />
     </Boundary>

@@ -7,7 +7,6 @@ import { ChatMessage } from "@/components/chat/ChatMessage";
 import { reactionLine, sectorLines, type ChatLine } from "@/content/chat";
 import { useCopy } from "@/hooks/useCopy";
 import { resolveCommand } from "@/lib/chat-engine";
-import { useHolocron } from "@/hooks/useHolocron";
 import { useStage } from "@/store/stage";
 
 const LIMIT = 80;
@@ -24,7 +23,6 @@ export function ChatDock() {
   const requestScene = useStage((state) => state.requestScene);
   const pushToast = useStage((state) => state.pushToast);
   const pushSignal = useStage((state) => state.pushSignal);
-  const burn = useHolocron();
   const router = useRouter();
   const bank = sectorLines(locale, scene);
   const scope = `${locale}:${scene}`;
@@ -33,6 +31,14 @@ export function ChatDock() {
   const [notes, setNotes] = useState<ChatLine[]>([]);
   const [seenSignal, setSeenSignal] = useState(signal.id);
   const cursor = useRef(2);
+  const logRef = useRef<HTMLDivElement>(null);
+  const shouldAutoScrollRef = useRef(true);
+
+  const handleScroll = () => {
+    if (!logRef.current) return;
+    const { scrollTop, scrollHeight, clientHeight } = logRef.current;
+    shouldAutoScrollRef.current = scrollHeight - (scrollTop + clientHeight) < 48;
+  };
 
   if (activeScope !== scope) {
     setActiveScope(scope);
@@ -84,7 +90,13 @@ export function ChatDock() {
 
   const lines = [...bank.slice(0, 2), ...stream, ...notes].slice(-LIMIT);
 
+  useEffect(() => {
+    if (!logRef.current || !shouldAutoScrollRef.current) return;
+    logRef.current.scrollTop = logRef.current.scrollHeight;
+  }, [lines]);
+
   const onCommand = (value: string) => {
+    shouldAutoScrollRef.current = true;
     const local: ChatLine = {
       id: `local-${Date.now()}`,
       author: copy.chat.local,
@@ -100,9 +112,6 @@ export function ChatDock() {
     } else if (command.type === "direct") {
       router.push("/direto");
       reply = copy.hud.direct;
-    } else if (command.type === "holocron") {
-      void burn();
-      reply = copy.alerts.holocronTitle;
     } else if (command.type === "interferencia") {
       pushSignal("interferencia");
       pushToast(copy.alerts.interferenceTitle, copy.alerts.interferenceBody);
@@ -123,8 +132,8 @@ export function ChatDock() {
   if (!open) return null;
 
   return (
-    <aside className="fixed inset-x-0 bottom-[7.5rem] z-40 flex max-h-[min(28rem,60dvh)] flex-col border border-line bg-surface lg:static lg:inset-auto lg:bottom-auto lg:max-h-none lg:w-80 lg:border-y-0 lg:border-l">
-      <div className="flex items-center justify-between gap-2 border-b border-line px-3 py-2">
+    <aside className="fixed inset-x-0 bottom-[7.5rem] z-40 flex max-h-[min(28rem,60dvh)] flex-col border border-line bg-surface lg:static lg:inset-auto lg:bottom-auto lg:h-full lg:max-h-dvh lg:min-h-0 lg:w-80 lg:border-y-0 lg:border-l">
+      <div className="flex shrink-0 items-center justify-between gap-2 border-b border-line px-3 py-2">
         <p className="font-mono text-[11px] text-accent">{copy.simulated}</p>
         <div className="flex">
           <button
@@ -146,15 +155,17 @@ export function ChatDock() {
         </div>
       </div>
       <div
+        ref={logRef}
+        onScroll={handleScroll}
         role="log"
         aria-live="off"
-        className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-3 py-3"
+        className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto overflow-x-hidden px-3 py-3"
       >
         {lines.map((line) => (
           <ChatMessage key={line.id} author={line.author} text={line.text} />
         ))}
       </div>
-      <div className="border-t border-line p-3">
+      <div className="shrink-0 border-t border-line p-3">
         <ChatInput onSubmit={onCommand} />
       </div>
     </aside>

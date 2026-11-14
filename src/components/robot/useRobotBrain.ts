@@ -39,7 +39,6 @@ export function useRobotBrain({ side, reduced, muted, sound, lines }: BrainInput
   }, [muted, sound, lines, sleeping]);
 
   const say = useCallback((text: string, force = false) => {
-    if (live.current.muted) return false;
     const now = Date.now();
     if (!force && now - lastSpoke.current < SPEECH_GAP_MS) return false;
     lastSpoke.current = now;
@@ -109,11 +108,11 @@ export function useRobotBrain({ side, reduced, muted, sound, lines }: BrainInput
   }, [say]);
 
   let state: RobotState = "idle";
-  if (muted) state = "muted";
-  else if (phase) state = "switching";
+  if (phase) state = "switching";
   else if (celebrating) state = "celebrating";
-  else if (sleeping) state = "sleeping";
   else if (speech) state = "speaking";
+  else if (muted) state = "muted";
+  else if (sleeping) state = "sleeping";
 
   return { artSide, phase, state, speech, say, clearSpeech };
 }

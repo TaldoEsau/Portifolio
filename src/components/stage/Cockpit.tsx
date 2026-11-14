@@ -22,7 +22,6 @@ import { StingerOverlay } from "@/components/stage/StingerOverlay";
 import { SkipLink } from "@/components/ui/SkipLink";
 import { useCopy } from "@/hooks/useCopy";
 import { useHashScene } from "@/hooks/useHashScene";
-import { useHolocron } from "@/hooks/useHolocron";
 import { useKeyboardNav } from "@/hooks/useKeyboardNav";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { focusSectorHeading } from "@/lib/a11y";
@@ -52,7 +51,6 @@ export function Cockpit() {
   const pushSignal = useStage((state) => state.pushSignal);
   const requestScene = useStage((state) => state.requestScene);
   const setChatOpen = useStage((state) => state.setChatOpen);
-  const burn = useHolocron();
   const { gateOpen } = useSide();
   const signal = useStage((state) => state.signal);
   const seen = useRef(false);
@@ -104,24 +102,6 @@ export function Cockpit() {
   }, [booted, copy, grant, pushToast, scene]);
 
   useEffect(() => {
-    const onKey = (event: KeyboardEvent) => {
-      const target = event.target;
-      if (
-        target instanceof HTMLElement &&
-        (target.tagName === "INPUT" || target.tagName === "TEXTAREA")
-      ) {
-        return;
-      }
-      if (event.key.toLowerCase() === "c" && booted && !dossierOpen && !event.metaKey && !event.ctrlKey && !event.altKey) {
-        event.preventDefault();
-        void burn();
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [booted, burn, dossierOpen]);
-
-  useEffect(() => {
     if (signal.type === "interferencia" || signal.type === "raid" || signal.type === "dossier") {
       grant(signal.type);
     }
@@ -162,14 +142,14 @@ export function Cockpit() {
         <ClickSpark>
           <div>
             <div
-              className="relative flex min-h-dvh flex-col lg:flex-row"
+              className="relative flex min-h-dvh flex-col lg:h-dvh lg:max-h-dvh lg:overflow-hidden lg:flex-row"
               {...(!booted || gateOpen ? { inert: true, "aria-hidden": true } : {})}
             >
               <SkipLink label={copy.a11y.skip} />
-              <div className="flex min-h-dvh min-w-0 flex-1 flex-col">
+              <div className="flex min-h-dvh min-w-0 flex-1 flex-col lg:h-full lg:min-h-0">
                 <HudBar />
                 <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
-                  <div className="order-2 lg:order-1">
+                  <div className="order-2 lg:order-1 lg:h-full">
                     <SceneDeck />
                   </div>
                   <main
