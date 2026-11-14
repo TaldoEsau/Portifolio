@@ -1055,7 +1055,11 @@ export const en: Copy = {
     footer: "ESAÚ SANTANA // SECTOR: OUTER RIM",
     direct: "Direct Data Pad",
     channel: "taldosatis channel",
-    cv: "Official Data Pad (PDF)",
+    cv: "Official Resume (PDF)",
+    cvDescription: "Official document featuring career summary, production projects, complete stack, and academic background.",
+    cvView: "View Resume (PDF)",
+    cvDownload: "Download PDF",
+    cvPreview: "Preview",
     cvMissing: "[DADO RESTRITO // AGUARDANDO DESCLASSIFICAÇÃO]",
     doors: [
       {

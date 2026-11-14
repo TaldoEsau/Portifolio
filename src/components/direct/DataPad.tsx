@@ -16,7 +16,8 @@ export function DataPad() {
         <p>{pt.direto.role}</p>
         <p className="text-muted">{pt.direto.location}</p>
         <p className="text-sm text-muted">{pt.direto.printHint}</p>
-        <p className="flex flex-wrap gap-4 font-mono text-sm">
+        <p className="flex flex-wrap items-center gap-4 font-mono text-sm">
+          <a className="text-accent underline font-semibold" href="/curriculo/Curriculo_Esau_Santana.pdf" target="_blank" rel="noopener noreferrer">📄 Baixar Currículo Oficial (PDF)</a>
           <a className="text-hologram" href="https://www.twitch.tv/taldosatis">
             {pt.contact.channel}
           </a>

@@ -3,6 +3,7 @@
 import { TextAnimate } from "@/components/cult-ui/text-animate";
 import { Postgrad } from "@/components/scenes/Postgrad";
 import { SceneFrame } from "@/components/stage/SceneFrame";
+import { CurriculumSection } from "@/components/ui/CurriculumSection";
 import { useCopy } from "@/hooks/useCopy";
 
 export function About() {
@@ -26,6 +27,7 @@ export function About() {
           ))}
         </ol>
       </section>
+      <CurriculumSection />
       <Postgrad />
       <section aria-labelledby="protocolo" className="grid gap-3">
         <TextAnimate id="protocolo" text={copy.about.protocolTitle} className="font-display text-2xl" />

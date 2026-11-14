@@ -2,6 +2,7 @@
 
 import { ChooseAgain } from "@/components/side/ChooseAgain";
 import { SceneFrame } from "@/components/stage/SceneFrame";
+import { CurriculumSection } from "@/components/ui/CurriculumSection";
 import { useCopy } from "@/hooks/useCopy";
 import { copyText } from "@/lib/clipboard";
 import { playClick } from "@/lib/sound";
@@ -50,6 +51,7 @@ export function Contact() {
           </li>
         ))}
       </ul>
+      <CurriculumSection />
       <footer className="flex flex-wrap gap-4 border-t border-line pt-4 font-mono text-xs text-muted">
         <p>
           © {copy.year} {copy.contact.footer}

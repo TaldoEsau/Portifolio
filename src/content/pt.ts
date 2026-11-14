@@ -1052,7 +1052,11 @@ export const pt = {
     footer: "ESAÚ SANTANA // SECTOR: OUTER RIM",
     direct: "Data Pad direto",
     channel: "Canal taldosatis",
-    cv: "Data Pad oficial (PDF)",
+    cv: "Currículo Oficial (PDF)",
+    cvDescription: "Documento oficial consolidado com resumo de qualificações, projetos em produção, stack completa e formação acadêmica.",
+    cvView: "Visualizar Currículo (PDF)",
+    cvDownload: "Baixar PDF",
+    cvPreview: "Ver prévia",
     cvMissing: "[DADO RESTRITO // AGUARDANDO DESCLASSIFICAÇÃO]",
     doors: [
       {
