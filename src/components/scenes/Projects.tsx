@@ -85,7 +85,7 @@ function MissionCard({ project }: { project: Project }) {
       >
         <article
           aria-labelledby={titleId}
-          className="chamfer-md h-full border border-line bg-surface p-4"
+          className="chamfer-md h-full border border-line bg-surface p-3 sm:p-4"
         >
           <p className="font-mono text-xs text-accent">{project.missionCode}</p>
           <h2 id={titleId} className="mt-2 font-display text-2xl">

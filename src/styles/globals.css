@@ -138,6 +138,9 @@ html:not([data-gate="open"]) .side-gate {
   background: #0b0c10;
   color: #e7e9ee;
   font-family: var(--font-plex-sans), "Segoe UI", sans-serif;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .side-gate-bar {
@@ -574,11 +577,19 @@ html:not([data-gate="open"]) .side-gate {
   box-sizing: border-box;
 }
 
-html,
+html {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 body {
   background: var(--bg);
   color: var(--text);
   min-height: 100%;
+  overflow-x: hidden;
+  max-width: 100%;
+  position: relative;
+  width: 100%;
 }
 
 body {
@@ -1855,4 +1866,52 @@ html[data-side="dark"] .robot-burst {
 
 noscript .noscript-banner {
   display: block;
+}
+
+@media (max-width: 767px) {
+  .side-gate {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .side-gate-bar {
+    padding: 0.5rem 0.75rem !important;
+    gap: 0.25rem 0.5rem !important;
+  }
+  .side-gate-title {
+    font-size: 1.15rem !important;
+  }
+  .side-gate-panes {
+    flex: 1 0 auto !important;
+    min-height: 0 !important;
+  }
+  .side-gate-pane {
+    padding: 0.85rem 0.75rem !important;
+    gap: 0.25rem !important;
+  }
+  .side-gate-droid-box {
+    min-height: auto !important;
+    margin-bottom: 0.25rem !important;
+  }
+  .side-gate-robot-wrapper {
+    width: 52px !important;
+    height: 58px !important;
+  }
+  .side-gate-bubble {
+    max-width: min(260px, 86vw) !important;
+    padding: 0.4rem 0.65rem !important;
+    font-size: 0.75rem !important;
+    line-height: 1.35 !important;
+  }
+  .side-gate-name {
+    font-size: clamp(1.75rem, 6vw, 2.5rem) !important;
+  }
+  .side-gate-tagline {
+    font-size: 0.75rem !important;
+  }
+  .side-gate-footer {
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.7rem !important;
+    gap: 0.25rem 0.5rem !important;
+  }
 }

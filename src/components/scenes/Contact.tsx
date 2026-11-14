@@ -20,10 +20,10 @@ export function Contact() {
         {copy.contact.doors.map((door) => (
           <li key={door.id} className="lift door border border-line bg-surface p-4">
             <p className="font-mono text-xs text-accent">{door.label}</p>
-            <p className="mt-2 break-words">{door.value}</p>
+            <p className="mt-2 break-all sm:break-words">{door.value}</p>
             {door.href ? (
               <a
-                className="mt-3 inline-flex min-h-11 items-center text-hologram underline"
+                className="mt-3 inline-flex min-h-11 items-center text-hologram underline break-all sm:break-words"
                 href={door.href}
                 target="_blank"
                 rel="noreferrer"

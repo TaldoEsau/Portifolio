@@ -36,19 +36,21 @@ export function HudBar() {
   }, []);
 
   return (
-    <header className="z-20 flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-line bg-surface px-3 py-1">
-      <LiveBadge />
-      <p className="font-mono text-xs text-muted">
-        {copy.hud.uptime} {uptime}
-      </p>
-      <p className="font-mono text-xs text-muted">
-        {`${meta.coords} // ${copy.deck.sectors[scene].code}`}
-      </p>
-      <div className="ml-auto flex flex-wrap items-center">
+    <header className="z-20 flex flex-wrap items-center justify-between gap-x-2 gap-y-1 border-b border-line bg-surface px-2 sm:px-3 py-1">
+      <div className="flex items-center gap-x-2 sm:gap-x-3 overflow-hidden">
+        <LiveBadge />
+        <p className="hidden font-mono text-xs text-muted sm:inline">
+          {copy.hud.uptime} {uptime}
+        </p>
+        <p className="hidden font-mono text-xs text-muted md:inline">
+          {`${meta.coords} // ${copy.deck.sectors[scene].code}`}
+        </p>
+      </div>
+      <div className="flex flex-wrap items-center gap-x-0.5 sm:gap-x-1">
         <ProgressChip />
         <button
           type="button"
-          className="min-h-11 cursor-pointer px-2 font-mono text-xs"
+          className="min-h-11 cursor-pointer px-1.5 sm:px-2 font-mono text-xs"
           aria-expanded={chatOpen}
           aria-label={copy.a11y.comms}
           onClick={() => setChatOpen(!chatOpen)}
@@ -61,9 +63,10 @@ export function HudBar() {
         <LocaleToggle />
         <Link
           href="/direto"
-          className="inline-flex min-h-11 items-center px-2 font-mono text-xs text-hologram"
+          className="inline-flex min-h-11 items-center px-1.5 sm:px-2 font-mono text-xs text-hologram"
         >
-          [{copy.hud.direct}]
+          <span className="hidden sm:inline">[{copy.hud.direct}]</span>
+          <span className="inline sm:hidden">[CV]</span>
         </Link>
       </div>
     </header>

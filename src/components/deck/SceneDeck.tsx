@@ -10,9 +10,9 @@ export function SceneDeck() {
   return (
     <nav
       aria-label={copy.deck.sectors.intro.name}
-      className="z-30 border-t border-line bg-surface px-2 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] lg:h-full lg:w-36 lg:border-t-0 lg:border-r lg:pb-2 lg:overflow-y-auto"
+      className="z-30 border-t border-line bg-surface px-1.5 pt-1.5 pb-[max(0.35rem,env(safe-area-inset-bottom))] lg:h-full lg:w-36 lg:border-t-0 lg:border-r lg:pb-2 lg:overflow-y-auto"
     >
-      <div className="grid grid-cols-3 gap-2 sm:grid-cols-6 lg:grid-cols-1">
+      <div className="grid grid-cols-3 gap-1.5 sm:grid-cols-6 lg:grid-cols-1">
         {SCENES.map((scene) => (
           <DeckButton
             key={scene.id}

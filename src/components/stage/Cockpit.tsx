@@ -160,7 +160,7 @@ export function Cockpit() {
                     <div className="pointer-events-none absolute inset-0">
                       <Starfield />
                     </div>
-                    <div className="relative z-10">
+                    <div className="relative z-10 pb-36 lg:pb-16">
                       <Intro />
                       <About />
                       <Projects />

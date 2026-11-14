@@ -22,7 +22,7 @@ export function SceneFrame({
     <section
       data-panel={id}
       hidden={!active}
-      className="scene-panel mx-auto w-full max-w-5xl px-4 py-6 md:px-8 md:py-8"
+      className="scene-panel mx-auto w-full max-w-5xl px-3 py-4 sm:px-4 sm:py-6 md:px-8 md:py-8"
       aria-labelledby={`setor-${id}`}
     >
       <p className="font-mono text-xs text-muted">

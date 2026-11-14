@@ -45,10 +45,17 @@ export function LiveBadge() {
         ? copy.hud.standby
         : `${copy.hud.transmitting} // ${copy.hud.freq}`;
 
+  const shortLabel =
+    status.mode === "live"
+      ? copy.hud.live
+      : status.mode === "offline"
+        ? copy.hud.standby
+        : copy.hud.transmitting.split(" ")[0];
+
   return (
     <button
       type="button"
-      className="inline-flex min-h-11 cursor-pointer items-center gap-2 font-mono text-xs text-text"
+      className="inline-flex min-h-11 cursor-pointer items-center gap-1.5 font-mono text-xs text-text shrink-0"
       aria-label={copy.a11y.badge}
       onClick={() => {
         const next = clicks + 1;
@@ -64,12 +71,13 @@ export function LiveBadge() {
       <span
         className={
           status.live
-            ? "live-pip inline-block h-2 w-2 bg-live"
-            : "inline-block h-2 w-2 bg-telemetry"
+            ? "live-pip inline-block h-2 w-2 shrink-0 bg-live"
+            : "inline-block h-2 w-2 shrink-0 bg-telemetry"
         }
         aria-hidden="true"
       />
-      <span>{label}</span>
+      <span className="hidden sm:inline">{label}</span>
+      <span className="inline sm:hidden">{shortLabel}</span>
     </button>
   );
 }

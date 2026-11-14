@@ -118,7 +118,7 @@ export function RobotGuide() {
   const [left, width, gap, mini] = bounds ? bounds.split("|").map(Number) : [0, 0, 0, 0];
   const size = mini ? 52 : 64;
   const corner = left + width - size - 12;
-  const minX = left + 20;
+  const minX = left + 12;
   const maxX = corner;
   const anchor = watching ? corner : left + width * ANCHORS[scene] - size / 2;
   const clampedAnchor = Math.round(Math.min(Math.max(anchor, minX), maxX));
@@ -545,6 +545,8 @@ return (
           closeLabel={copy.guide.hide}
           onClose={() => setEncounter(null)}
           align={encounter.rivalTargetX > track.x ? "left" : "right"}
+          robotX={track.x}
+          robotSize={size}
         />
       ) : open && !encounter ? (
         <div
@@ -560,6 +562,8 @@ return (
             closeLabel={copy.guide.hide}
             onClose={() => setOpen(false)}
             align={right ? "right" : "left"}
+            robotX={track.x}
+            robotSize={size}
           >
             <div className="mt-2 flex flex-wrap gap-x-1 font-mono text-[0.6875rem]">
               {touring ? (
@@ -660,6 +664,8 @@ return (
             closeLabel={copy.guide.hide}
             onClose={() => setEncounter(null)}
             align={track.x > encounter.rivalTargetX ? "left" : "right"}
+            robotX={encounter.rivalTargetX}
+            robotSize={size}
           />
         ) : null}
         <div
