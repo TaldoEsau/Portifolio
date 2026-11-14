@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { Component, type ReactNode } from "react";
+import { useSide } from "@/components/side/SideProvider";
 import { useCopy } from "@/hooks/useCopy";
 import type { BlueprintId, DiagramProps } from "@/remotion/diagram-props";
 import { useStage } from "@/store/stage";
@@ -9,7 +10,7 @@ import { useStage } from "@/store/stage";
 function BlueprintLoading() {
   const copy = useCopy();
   return (
-    <div className="grid aspect-video place-items-center border border-line bg-bg px-4 text-center font-mono text-sm text-muted">
+    <div className="grid aspect-video place-items-center border border-line bg-surface px-4 text-center font-mono text-sm text-muted">
       {copy.projects.loading}
     </div>
   );
@@ -53,9 +54,10 @@ export function BlueprintSlot({
   autoPlay?: boolean;
 }) {
   const copy = useCopy();
+  const { side } = useSide();
   const reduced = useStage((state) => state.reducedMotion);
   return (
-    <Boundary key={id} fallback={copy.projects.failed}>
+    <Boundary key={`${id}-${side}`} fallback={copy.projects.failed}>
       <Player
         id={id}
         autoPlay={autoPlay}
@@ -68,6 +70,7 @@ export function BlueprintSlot({
           frame: copy.a11y.frame,
         }}
         input={{
+          side,
           navLock: copy.lab.navLock,
           lines: [...copy.lab.geminiSteps],
           caption: copy.lab.arduinoCaption,

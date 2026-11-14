@@ -47,7 +47,7 @@ export function RemotionBlueprintPlayer({
   return (
     <div className="grid gap-3">
       <div
-        className="w-full overflow-hidden border border-line bg-bg"
+        className="w-full overflow-hidden border border-line bg-surface"
         style={{ aspectRatio: `${blueprint.width} / ${blueprint.height}` }}
       >
         <Player

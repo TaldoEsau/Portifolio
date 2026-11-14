@@ -1,6 +1,6 @@
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import type { DiagramProps } from "@/remotion/diagram-props";
-import { amber, holo, ink, line, muted, ok, panel, voidColor } from "@/remotion/palette";
+import { getPalette, type RemotionPalette } from "@/remotion/palette";
 
 export const ARDUINO_FRAMES = 180;
 
@@ -25,9 +25,9 @@ const ICON = 72;
 
 const center = (index: number) => LEFT + index * (CARD_W + CARD_GAP) + CARD_W / 2;
 
-type IconProps = { color: string; frame: number; active: boolean };
+type IconProps = { color: string; frame: number; active: boolean; palette: RemotionPalette };
 
-function ArduinoIcon({ color, frame }: IconProps) {
+function ArduinoIcon({ color, frame, palette }: IconProps) {
   const pressed = frame < 24 ? 4 : 0;
   const ring = interpolate(frame, [0, 24], [0, 1], { extrapolateRight: "clamp" });
   return (
@@ -41,9 +41,9 @@ function ArduinoIcon({ color, frame }: IconProps) {
       <circle cx="14" cy="38" r="2" fill={color} />
       {/* botão arcade */}
       <rect x="28" y={22 + pressed} width="16" height={8 - pressed} fill={color} opacity="0.5" />
-      <ellipse cx="36" cy={20 + pressed} rx="12" ry="5" fill={amber} />
+      <ellipse cx="36" cy={20 + pressed} rx="12" ry="5" fill={palette.amber} />
       {ring < 1 ? (
-        <circle cx="36" cy="18" r={8 + ring * 14} stroke={amber} strokeWidth="1.5" opacity={1 - ring} />
+        <circle cx="36" cy="18" r={8 + ring * 14} stroke={palette.amber} strokeWidth="1.5" opacity={1 - ring} />
       ) : null}
     </svg>
   );
@@ -85,7 +85,7 @@ function PythonIcon({ color, frame, active }: IconProps) {
   );
 }
 
-function HelixIcon({ color, active, frame }: IconProps) {
+function HelixIcon({ color, active, frame, palette }: IconProps) {
   const rec = active && Math.floor(frame / 10) % 2 === 0;
   return (
     <svg width={ICON} height={ICON} viewBox="0 0 72 72" fill="none">
@@ -95,7 +95,7 @@ function HelixIcon({ color, active, frame }: IconProps) {
       <circle cx="26" cy="36" r="5" stroke={color} strokeWidth="2" />
       <circle cx="26" cy="22" r="5" stroke={color} strokeWidth="2" />
       <path d="M30 33 L52 20 M30 25 L52 38" stroke={color} strokeWidth="2" />
-      <circle cx="58" cy="16" r="3" fill={rec ? amber : "transparent"} />
+      <circle cx="58" cy="16" r="3" fill={rec ? palette.amber : "transparent"} />
     </svg>
   );
 }
@@ -131,20 +131,23 @@ function RenderIcon({ color }: IconProps) {
 const ICONS = [ArduinoIcon, SerialIcon, PythonIcon, HelixIcon, DownloadIcon, RenderIcon];
 
 /** Cena de live simplificada: jogo + webcam. */
-function LiveScene({ width, height }: { width: number; height: number }) {
+function LiveScene({ width, height, palette }: { width: number; height: number; palette: RemotionPalette }) {
   return (
     <svg width={width} height={height} viewBox="0 0 160 90" preserveAspectRatio="none">
-      <rect width="160" height="90" fill={panel} />
-      <path d="M0 70 L30 55 L55 64 L85 42 L115 58 L160 40 V90 H0 Z" fill={line} opacity="0.7" />
-      <circle cx="78" cy="50" r="5" fill={amber} />
-      <rect x="120" y="6" width="34" height="24" fill={voidColor} stroke={holo} strokeWidth="1" />
-      <circle cx="137" cy="15" r="4" fill={holo} />
-      <path d="M129 28 Q137 19 145 28" fill={holo} />
+      <rect width="160" height="90" fill={palette.panel} />
+      <path d="M0 70 L30 55 L55 64 L85 42 L115 58 L160 40 V90 H0 Z" fill={palette.line} opacity="0.7" />
+      <circle cx="78" cy="50" r="5" fill={palette.amber} />
+      <rect x="120" y="6" width="34" height="24" fill={palette.voidColor} stroke={palette.holo} strokeWidth="1" />
+      <circle cx="137" cy="15" r="4" fill={palette.holo} />
+      <path d="M129 28 Q137 19 145 28" fill={palette.holo} />
     </svg>
   );
 }
 
-export function ArduinoClipPipeline({ caption = "", steps }: DiagramProps) {
+export function ArduinoClipPipeline({ caption = "", steps, side = "dark" }: DiagramProps) {
+  const palette = getPalette(side);
+  const { amber, holo, ink, line, muted, ok, panel, voidColor } = palette;
+
   const frame = useCurrentFrame();
   const descriptions = steps && steps.length === LABELS.length ? steps : FALLBACK_STEPS;
 
@@ -180,6 +183,8 @@ export function ArduinoClipPipeline({ caption = "", steps }: DiagramProps) {
           color: amber,
           fontFamily: MONO,
           fontSize: 16,
+          fontWeight: 700,
+          letterSpacing: 1,
         }}
       >
         STREAM LAB // CLIP BUTTON
@@ -228,6 +233,7 @@ export function ArduinoClipPipeline({ caption = "", steps }: DiagramProps) {
               alignItems: "center",
               gap: 8,
               opacity: reached ? 1 : 0.55,
+              borderRadius: side === "light" ? 8 : 0,
             }}
           >
             <div
@@ -238,9 +244,10 @@ export function ArduinoClipPipeline({ caption = "", steps }: DiagramProps) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                borderRadius: side === "light" ? 6 : 0,
               }}
             >
-              <Icon color={color} frame={frame} active={current} />
+              <Icon color={color} frame={frame} active={current} palette={palette} />
             </div>
             <div
               style={{
@@ -290,9 +297,10 @@ export function ArduinoClipPipeline({ caption = "", steps }: DiagramProps) {
           height: LIVE_H,
           border: `1px solid ${line}`,
           overflow: "hidden",
+          borderRadius: side === "light" ? 6 : 0,
         }}
       >
-        <LiveScene width={LIVE_W} height={LIVE_H} />
+        <LiveScene width={LIVE_W} height={LIVE_H} palette={palette} />
         <div
           style={{
             position: "absolute",
@@ -302,7 +310,7 @@ export function ArduinoClipPipeline({ caption = "", steps }: DiagramProps) {
             height: LIVE_H,
             border: `2px solid ${ok}`,
             boxSizing: "border-box",
-            boxShadow: `0 0 0 999px rgba(0,0,0,${0.55 * cropShow})`,
+            boxShadow: `0 0 0 999px rgba(0,0,0,${0.45 * cropShow})`,
             opacity: cropShow,
           }}
         />
@@ -357,6 +365,7 @@ export function ArduinoClipPipeline({ caption = "", steps }: DiagramProps) {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            borderRadius: 6,
           }}
         >
           <svg width="36" height="36" viewBox="0 0 36 36">
@@ -364,7 +373,7 @@ export function ArduinoClipPipeline({ caption = "", steps }: DiagramProps) {
             <path d="M5 34 Q18 18 31 34" fill={holo} />
           </svg>
         </div>
-        <div style={{ flex: 1, overflow: "hidden", opacity: finalShow }}>
+        <div style={{ flex: 1, overflow: "hidden", opacity: finalShow, borderRadius: 6 }}>
           <svg width="100%" height="100%" viewBox="0 0 40 70" preserveAspectRatio="none">
             <rect width="40" height="70" fill={panel} />
             <path d="M0 52 L12 40 L24 48 L40 32 V70 H0 Z" fill={line} />
@@ -380,7 +389,7 @@ export function ArduinoClipPipeline({ caption = "", steps }: DiagramProps) {
           left: 560,
           top: 380,
           width: 368,
-          color: muted,
+          color: ink,
           fontFamily: MONO,
           fontSize: 16,
           lineHeight: 1.45,

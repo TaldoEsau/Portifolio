@@ -1,6 +1,6 @@
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import type { DiagramProps } from "@/remotion/diagram-props";
-import { amber, holo, ink, line, muted, ok, panel, voidColor } from "@/remotion/palette";
+import { getPalette } from "@/remotion/palette";
 
 export const GEMINI_FRAMES = 180;
 
@@ -12,7 +12,8 @@ const NODES = [
   { label: "ALERTA", x: 790 },
 ];
 
-export function GeminiPipeline({ lines = [] }: DiagramProps) {
+export function GeminiPipeline({ lines = [], side = "dark" }: DiagramProps) {
+  const { amber, holo, ink, line, muted, ok, panel, voidColor } = getPalette(side);
   const frame = useCurrentFrame();
   const packet = interpolate(frame, [0, 150], [70, 790], {
     extrapolateRight: "clamp",

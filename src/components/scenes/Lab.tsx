@@ -29,6 +29,7 @@ const COMPOSITIONS: BlueprintId[] = [
 
 export function Lab() {
   const copy = useCopy();
+  const { side } = useSide();
   const scene = useStage((state) => state.scene);
   const setDossierOpen = useStage((state) => state.setDossierOpen);
   const active = scene === "lab";
@@ -55,7 +56,7 @@ export function Lab() {
           ))}
         </div>
         {active ? (
-          <BlueprintSlot key={composition} id={composition} />
+          <BlueprintSlot key={`${composition}-${side}`} id={composition} />
         ) : (
           <div className="aspect-video border border-line" />
         )}

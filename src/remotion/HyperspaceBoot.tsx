@@ -1,10 +1,11 @@
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import type { DiagramProps } from "@/remotion/diagram-props";
-import { amber, holo, ink, muted, voidColor } from "@/remotion/palette";
+import { getPalette } from "@/remotion/palette";
 
 export const HYPERSPACE_FRAMES = 90;
 
-export function HyperspaceBoot({ navLock = "NAV LOCK" }: DiagramProps) {
+export function HyperspaceBoot({ navLock = "NAV LOCK", side = "dark" }: DiagramProps) {
+  const { amber, holo, ink, muted, voidColor } = getPalette(side);
   const frame = useCurrentFrame();
   const streak = interpolate(frame, [0, 70], [12, 220], {
     extrapolateRight: "clamp",
